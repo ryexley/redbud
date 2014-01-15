@@ -73,7 +73,7 @@
     "dojo": false, //defines globals exposed by the Dojo Toolkit
     "jquery": true, //defines globals exposed by the jQuery JavaScript library
     "mootools": false, //defines globals exposed by the MooTools JavaScript framework
-    "node": false, //defines globals available when your code is running inside of the Node runtime environment
+    "node": true, //defines globals available when your code is running inside of the Node runtime environment
     "nonstandard": false, //defines non-standard but widely adopted globals such as `escape` and `unescape`
     "phantom": false, //defines globals available when your core is running inside of the PhantomJS runtime environment
     "prototypejs": false, //defines globals exposed by the Prototype JavaScript framework
