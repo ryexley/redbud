@@ -8,5 +8,9 @@ app.use(express.errorHandler());
 app.set("views", __dirname + "/views");
 app.set("view engine", "jade");
 
+app.get("/", function (req, res) {
+    res.render("index", { title: "Redbud client app" });
+});
+
 app.listen("4000");
 console.log("Redbud sample app listening on port 4000");
