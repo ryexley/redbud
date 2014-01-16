@@ -12,6 +12,7 @@
     "gulp": "~3.3.4",
     "gulp-jshint": "~1.3.4",
     "jshint-stylish": "~0.1.5",
-    "gulp-stylus": "0.0.9"
+    "gulp-stylus": "0.0.9",
+    "gulp-nodemon": "~0.1.1"
   }
 }
