@@ -1,12 +1,39 @@
 var express = require("express");
 var app = express();
 
-app.use(app.router);
+app.use(express.json());
+app.use(express.urlencoded());
 app.use(express.static(__dirname + "/public"));
+app.use(express.favicon());
 app.use(express.errorHandler());
 
+app.set("port", process.env.PORT || 3000);
 app.set("views", __dirname + "/views");
 app.set("view engine", "jade");
 
-app.listen(3000);
-console.log("Redbud server listening on port 3000");
+app.all("*", function (req, res, next) {
+    if (!req.get("Origin")) {
+        return next();
+    }
+
+    res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.set("Access-Control-Allow-Origin", "http://localhost:4000");
+    res.set("Access-Control-Allow-Methods", "GET, POST");
+    res.set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+
+    if ("OPTIONS" === req.method) {
+        return res.send(200);
+    }
+
+    next();
+});
+
+app.use(app.router);
+
+app.post("/track", function (req, res, next) {
+    console.log(res, next);
+    console.log(req.body);
+});
+
+app.listen(app.get("port"));
+console.log("Redbud server listening on port " + app.get("port"));
