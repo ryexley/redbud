@@ -10,11 +10,11 @@ html(lang="en")
         block content
         script(type="text/javascript").
             (function () {
-                var scriptTag = document.getElementsByTagName("script")[0],
-                    redbudClient = document.createElement("script");
+                var s = document.getElementsByTagName("script")[0],
+                    rbc = document.createElement("script");
 
-                redbudClient.async = true;
-                redbudClient.src = "http://localhost:3000/redbud-client.js";
-                scriptTag.parentNode.insertBefore(redbudClient, scriptTag);
+                rbc.async = true;
+                rbc.src = "http://localhost:3000/redbud-client.js";
+                s.parentNode.insertBefore(rbc, s);
             }());
 

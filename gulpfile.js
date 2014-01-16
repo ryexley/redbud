@@ -5,7 +5,7 @@ var stylish = require("jshint-stylish");
 var stylus = require("gulp-stylus");
 
 gulp.task("jshint", function () {
-    gulp.src(["app/*.js", "specs/*.js", "sample/*.js"])
+    gulp.src(["app/**/*.js", "specs/**/*.js", "sample/**/*.js"])
         .pipe(jshint(".jshintrc"))
         .pipe(jshint.reporter(stylish));
 });
@@ -19,7 +19,7 @@ gulp.task("sample-stylus", function () {
 gulp.task("default", function () {
     gulp.run("jshint", "sample-stylus");
 
-    gulp.watch(["app/*.js", "specs/*.js", "sample/*.js"], function () {
+    gulp.watch(["app/**/*.js", "specs/**/*.js", "sample/**/*.js"], function () {
         gulp.run("jshint");
     });
 
