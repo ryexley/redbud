@@ -1,5 +1,5 @@
 doctype html
-html
+html(lang="en")
     head
         meta(charset="utf-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
@@ -8,3 +8,13 @@ html
         link(rel="stylesheet", href="/css/sample.css")
     body
         block content
+        script(type="text/javascript").
+            (function () {
+                var scriptTag = document.getElementsByTagName("script")[0],
+                    redbudClient = document.createElement("script");
+
+                redbudClient.async = true;
+                redbudClient.src = "http://localhost:3000/redbud-client.js";
+                scriptTag.parentNode.insertBefore(redbudClient, scriptTag);
+            }());
+
