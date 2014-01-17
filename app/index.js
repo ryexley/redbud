@@ -36,7 +36,9 @@ db.setup();
 app.use(app.router);
 
 app.post("/track", function (req, res, next) {
-    db.saveTrackingData(req.body, function () {
+    var trackingData = req.body;
+    trackingData["clientIpAddress"] = req.ip;
+    db.saveTrackingData(trackingData, function () {
         res.send({ message: "success" });
         console.log("Tracking data saved");
     });
