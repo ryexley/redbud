@@ -3,7 +3,8 @@
     "use strict";
 
     var _window = window,
-        _document = document;
+        _document = document,
+        _navigator = navigator;
 
     var Tracker = function () {
 
@@ -11,17 +12,27 @@
             return {
                 url: _window.location.href,
                 browserInfo: getBrowserInfo(),
-                referrer: getReferrer()
+                referrer: getReferrer(),
+                timestamp: +new Date()
             };
         };
 
         var getBrowserInfo = function () {
-            var browserInfo = _window.navigator;
-            delete browserInfo.geolocation;
-            delete browserInfo.mimeTypes;
-            delete browserInfo.plugins;
-            delete browserInfo.webkitPersistentStorage;
-            delete browserInfo.webkitTemporaryStorage;
+            var browserInfo = {
+                appCodeName: _navigator.appCodeName || "",
+                appName: _navigator.appName || "",
+                appVersion: _navigator.appVersion || "",
+                cookieEnabled: _navigator.cookieEnabled || "",
+                doNotTrack: _navigator.doNotTrack || "",
+                language: _navigator.language || "",
+                onLine: _navigator.onLine || "",
+                platform: _navigator.platform || "",
+                product: _navigator.product || "",
+                productSub: _navigator.productSub || "",
+                userAgent: _navigator.userAgent || "",
+                vendor: _navigator.vendor || "",
+                vendorSub: _navigator.vendorSub || ""
+            };
 
             return browserInfo;
         };

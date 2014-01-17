@@ -10,6 +10,11 @@ module.exports = function (config) {
     var dbName = config.database.name;
 
     var adapter = {
+        connectionData: {
+            host: dbHost,
+            port: dbPort
+        },
+
         setup: function () {
             var createTable = function (cnx, name) {
                 r.db(dbName).tableCreate(name, { primaryKey: config.database.tables[name] }).run(cnx, function (err, result) {
@@ -34,6 +39,32 @@ module.exports = function (config) {
                 for (var table in config.database.tables) {
                     createTable(cnx, table);
                 }
+            });
+        },
+
+        connect: function (done) {
+            r.connect(this.connectionData, function (err, cnx) {
+                assert.ok(err === null, err);
+                cnx._id = Math.floor(Math.random() * 10001);
+                done(err, cnx);
+            });
+        },
+
+        saveTrackingData: function (data, done) {
+            this.connect(function (err, cnx) {
+                r.db(dbName).table("tracking_data").insert(data).run(cnx, function (err, result) {
+                    if (err) {
+                        logError("[ERROR][%s][saveTrackingData] %s:%s\n%s", cnx._id, err.name, err.msg, err.message);
+                    } else {
+                        if (result.inserted === 1) {
+                            done(null, true);
+                        } else {
+                            done(null, false);
+                        }
+                    }
+
+                    cnx.close();
+                });
             });
         }
     };

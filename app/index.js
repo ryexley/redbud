@@ -35,8 +35,9 @@ db.setup();
 app.use(app.router);
 
 app.post("/track", function (req, res, next) {
-    console.log(res, next);
-    console.log(req.body);
+    db.saveTrackingData(req.body, function () {
+        console.log("Tracking data saved");
+    });
 });
 
 app.listen(app.get("port"));
