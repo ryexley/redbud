@@ -1,4 +1,6 @@
 var express = require("express");
+var config = require("./config")();
+var db = require("./data")(config);
 var app = express();
 
 app.use(express.json());
@@ -27,6 +29,8 @@ app.all("*", function (req, res, next) {
 
     next();
 });
+
+db.setup();
 
 app.use(app.router);
 
