@@ -1,6 +1,7 @@
 var express = require("express");
 var config = require("./config")();
 var db = require("./data")(config);
+var parser = require("./data/trackingDataParser");
 var app = express();
 
 app.use(express.json());
@@ -41,6 +42,7 @@ app.post("/track", function (req, res, next) {
     db.saveTrackingData(trackingData, function () {
         res.send({ message: "success" });
         console.log("Tracking data saved");
+        parser.foo(trackingData);
     });
 });
 
