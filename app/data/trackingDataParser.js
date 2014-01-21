@@ -1,4 +1,5 @@
 var assert = require("assert");
+var async = require("async");
 
 var Parser = function (db) {
 
@@ -15,26 +16,73 @@ var Parser = function (db) {
     var parser = {
 
         processTrackingData: function (data) {
-            this.pageView(data.url);
-            this.referrer(data.referrer);
-            this.browserInfo(data.browserInfo);
-            this.geo(data.clientIpAddress);
+            async.parallel([
+                this.pageView(data.url, this.onPageViewDone),
+                this.referrer(data.referrer, this.onReferrerDone),
+                this.browserInfo(data.browserInfo, this.onBrowserInfoDone),
+                this.geo(data.clientIpAddress, this.onGeoDone)
+            ], this.onProcessTrackingDataDone);
         },
 
-        pageView: function (url) {
-
+        onProcessTrackingDataDone: function (err, results) {
+            console.log("Parsing: Tracking data completed successfully");
         },
 
-        referrer: function (url) {
-
+        pageView: function (url, done) {
+            db.pageViewExists(url, function (err, exists) {
+                if (exists) {
+                    db.getPageView(url, function (err, pageView) {
+                        db.updatePageView({
+                            id: pageView.id,
+                            hits: parseInt(pageView.hits, 10) + 1,
+                            lastHit: new Date()
+                        }, function (err, result) {
+                            assert.ok(err === null, err);
+                            done(null, result);
+                        });
+                    });
+                } else {
+                    db.addPageView({
+                        page: url,
+                        hits: 1,
+                        lastHit: new Date()
+                    }, function (err, result) {
+                        assert.ok(err === null, err);
+                        done(result);
+                    });
+                }
+            });
         },
 
-        browserInfo: function (data) {
-
+        onPageViewDone: function (err, results) {
+            console.log("Parsing: pageView complete");
         },
 
-        geo: function (ip) {
+        referrer: function (url, done) {
+            console.log("Parsing: referrer -> " + url);
+            done(null, true);
+        },
 
+        onReferrerDone: function (err, results) {
+            console.log("Parsing: referrer complete");
+        },
+
+        browserInfo: function (data, done) {
+            console.log("Parsing: browserInfo -> " + data);
+            done(null, true);
+        },
+
+        onBrowserInfoDone: function (err, results) {
+            console.log("Parsing: browserInfo complete");
+        },
+
+        geo: function (ip, done) {
+            console.log("Parsing: geo:IP -> " + ip);
+            done(null, true);
+        },
+
+        onGeoDone: function (err, results) {
+            console.log("Parsing: ip/geo complete");
         }
 
     };

@@ -114,9 +114,9 @@ var Table = function (config, tableName) {
     };
 
     return table;
-
 };
 
+/* https://github.com/robconery/second-thought */
 var SecondThought = function (config) {
 
     var self = this;
@@ -255,6 +255,7 @@ var SecondThought = function (config) {
             console.log("Running database setup...".grey);
             self.install(config.tables, function (err, result) {
                 assert(err === null, err);
+                // TODO: figure out why this line is never called...
                 console.log("Database `setup` completed successfully".green);
             });
         });
@@ -277,6 +278,45 @@ var RethinkDbAdapter = function (config) {
             assert.ok(err === null, err);
 
             db.tracking_data.save(data, next);
+        });
+    };
+
+    self.pageViewExists = function (url, next) {
+        db.connect({ db: dataSource }, function (err, db) {
+            db.pageviews.exists({ page: url }, function (err, exists) {
+                assert.ok(err === null, err);
+                next(null, exists);
+            });
+        });
+    };
+
+    self.addPageView = function (pageView, next) {
+        db.connect({ db: dataSource }, function (err, db) {
+            db.pageviews.save(pageView, function (err, doc) {
+                assert.ok(err === null, err);
+                next(null, doc);
+            });
+        });
+    };
+
+    self.getPageView = function (url, next) {
+        db.connect({ db: dataSource }, function (err, db) {
+            db.pageviews.first({ page: url }, function (err, pageView) {
+                assert.ok(err === null, err);
+                next(null, pageView);
+            });
+        });
+    };
+
+    self.updatePageView = function (data, next) {
+        db.connect({ db: dataSource }, function (err, db) {
+            db.pageviews.updateOnly({
+                hits: data.hits,
+                lastHit: data.lastHit
+            }, data.id, function (err, result) {
+                assert.ok(err === null, err);
+                next(null, result);
+            });
         });
     };
 
