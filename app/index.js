@@ -39,10 +39,10 @@ app.use(app.router);
 app.post("/track", function (req, res, next) {
     var trackingData = req.body;
     trackingData["clientIpAddress"] = req.ip;
-    db.saveTrackingData(trackingData, function () {
-        res.send({ message: "success" });
+    db.saveTrackingData(trackingData, function (err, doc) {
+        res.send({ message: "success", id: doc.id });
         console.log("Tracking data saved");
-        parser.foo(trackingData);
+        parser.processTrackingData(trackingData);
     });
 });
 

@@ -198,25 +198,19 @@ var SecondThought = function (config) {
                     if (table.overwrite) {
                         create = true;
                     } else {
-                        console.log("\t=> Table `" + table.name + "` already exists in database `" + config.db + "`");
+                        console.log("\t=> Table `".grey + table.name + "` already exists in database `".grey + config.db + "`".grey);
                     }
                 }
 
                 if (create) {
                     r.tableCreate(table.name, { primaryKey: table.key || "id" }).run(conn, function (err, result) {
                         assert.ok(err === null, err);
-                        console.log("\t=> Table `" + table.name + "` created successfully in database `" + config.db + "`");
+                        console.log("\t=> Table `".green + table.name + "` created successfully in database `".green + config.db + "`".green);
                         conn.close();
                         next();
                     });
                 }
             });
-
-            // r.tableCreate(tableName).run(conn, function(err, result) {
-            //     assert.ok(err === null, err);
-            //     conn.close();
-            //     next();
-            // });
         });
     };
 
@@ -246,9 +240,9 @@ var SecondThought = function (config) {
 
     self.install = function (tables, next) {
         assert.ok(tables);
-        console.log("\t=> Creating database `" + config.db + "`");
+        console.log("\t=> Creating database `".grey + config.db + "`".grey);
         self.createDb(config.db, function(err, result) {
-            console.log("\t=> Database `" + config.db + "` created successfully");
+            console.log("\t=> Database `".green + config.db + "` created successfully".green);
             async.each(tables, self.createTable, function(err) {
                 assert.ok(err === null, err);
                 next(err, err === null);
@@ -258,10 +252,10 @@ var SecondThought = function (config) {
 
     self.setup = function () {
         self.connect({ host: config.host, db: config.name, port: config.port }, function (err, db) {
-            console.log("Running database setup...");
+            console.log("Running database setup...".grey);
             self.install(config.tables, function (err, result) {
                 assert(err === null, err);
-                console.log("!!!!!!!!!!! Database `setup` completed successfully");
+                console.log("Database `setup` completed successfully".green);
             });
         });
     };
@@ -269,6 +263,26 @@ var SecondThought = function (config) {
     return self;
 };
 
+var RethinkDbAdapter = function (config) {
+    var self = this;
+    var db = new SecondThought(config);
+    var dataSource = config.name;
+
+    self.setup = function () {
+        db.setup();
+    };
+
+    self.saveTrackingData = function (data, next) {
+        db.connect({ db: dataSource }, function (err, db) {
+            assert.ok(err === null, err);
+
+            db.tracking_data.save(data, next);
+        });
+    };
+
+    return self;
+};
+
 module.exports = function (config) {
-    return new SecondThought(config);
+    return new RethinkDbAdapter(config);
 };
