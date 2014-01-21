@@ -1,8 +1,10 @@
 var express = require("express");
 var config = require("./config")();
-var db = require("./data")(config);
-var parser = require("./data/trackingDataParser");
+var db = require("./data")(config.database);
+var parser = require("./data/trackingDataParser")(db);
 var app = express();
+
+db.setup();
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -31,8 +33,6 @@ app.all("*", function (req, res, next) {
 
     next();
 });
-
-db.setup();
 
 app.use(app.router);
 

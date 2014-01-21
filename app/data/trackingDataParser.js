@@ -1,9 +1,8 @@
-var config = require("../config")();
-var db = require("./")(config);
+var assert = require("assert");
 
-var parser = function () {
+var Parser = function (db) {
 
-    console.log("Tracking data parser loaded");
+    // assert.ok(db, "No database connection");
 
     // IP address geo lookup:
     //
@@ -15,8 +14,27 @@ var parser = function () {
 
     var parser = {
 
-        foo: function (data) {
-            console.log("I pity da foo...", data);
+        processTrackingData: function (data) {
+            this.pageView(data.url);
+            this.referrer(data.referrer);
+            this.browserInfo(data.browserInfo);
+            this.geo(data.clientIpAddress);
+        },
+
+        pageView: function (url) {
+
+        },
+
+        referrer: function (url) {
+
+        },
+
+        browserInfo: function (data) {
+
+        },
+
+        geo: function (ip) {
+
         }
 
     };
@@ -25,4 +43,6 @@ var parser = function () {
 
 };
 
-module.exports = parser();
+module.exports = function (db) {
+    return new Parser(db);
+};

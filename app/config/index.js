@@ -4,9 +4,11 @@ module.exports = function () {
             host: "localhost",
             port: 28015,
             name: "redbud",
-            tables: {
-                "tracking_data": "id"
-            }
+            tables: [
+                { name: "tracking_data" },
+                { name: "pageviews" },
+                { name: "referrers" }
+            ]
         }
     };
 
