@@ -34,8 +34,10 @@ var Parser = function (db) {
                     db.getPageView(url, function (err, pageView) {
                         db.updatePageView({
                             id: pageView.id,
-                            hits: parseInt(pageView.hits, 10) + 1,
-                            lastHit: new Date()
+                            new: {
+                                hits: parseInt(pageView.hits, 10) + 1,
+                                lastHit: new Date()
+                            }
                         }, function (err, result) {
                             assert.ok(err === null, err);
                             done(null, result);
@@ -48,7 +50,7 @@ var Parser = function (db) {
                         lastHit: new Date()
                     }, function (err, result) {
                         assert.ok(err === null, err);
-                        done(result);
+                        done(null, result);
                     });
                 }
             });
@@ -59,8 +61,31 @@ var Parser = function (db) {
         },
 
         referrer: function (url, done) {
-            console.log("Parsing: referrer -> " + url);
-            done(null, true);
+            db.referrerExists(url, function (err, exists) {
+                if (exists) {
+                    db.getReferrer(url, function (err, referrer) {
+                        db.updateReferrer({
+                            id: referrer.id,
+                            new: {
+                                count: parseInt(referrer.count, 10) + 1,
+                                lastReferred: new Date()
+                            }
+                        }, function (err, result) {
+                            assert.ok(err === null, err);
+                            done(null, result);
+                        });
+                    });
+                } else {
+                    db.addReferrer({
+                        referrer: url,
+                        count: 1,
+                        lastReferred: new Date()
+                    }, function (err, result) {
+                        assert.ok(err === null, err);
+                        done(null, result);
+                    });
+                }
+            });
         },
 
         onReferrerDone: function (err, results) {

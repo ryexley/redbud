@@ -310,10 +310,43 @@ var RethinkDbAdapter = function (config) {
 
     self.updatePageView = function (data, next) {
         db.connect({ db: dataSource }, function (err, db) {
-            db.pageviews.updateOnly({
-                hits: data.hits,
-                lastHit: data.lastHit
-            }, data.id, function (err, result) {
+            db.pageviews.updateOnly(data.new, data.id, function (err, result) {
+                assert.ok(err === null, err);
+                next(null, result);
+            });
+        });
+    };
+
+    self.referrerExists = function (url, next) {
+        db.connect({ db: dataSource }, function (err, db) {
+            db.referrers.exists({ referrer: url }, function (err, exists) {
+                assert.ok(err === null, err);
+                next(null, exists);
+            });
+        });
+    };
+
+    self.addReferrer = function (referrer, next) {
+        db.connect({ db: dataSource }, function (err, db) {
+            db.referrers.save(referrer, function (err, doc) {
+                assert.ok(err === null, err);
+                next(null, doc);
+            });
+        });
+    };
+
+    self.getReferrer = function (url, next) {
+        db.connect({ db: dataSource }, function (err, db) {
+            db.referrers.first({ referrer: url }, function (err, referrer) {
+                assert.ok(err === null, err);
+                next(null, referrer);
+            });
+        });
+    };
+
+    self.updateReferrer = function (data, next) {
+        db.connect({ db: dataSource }, function (err, db) {
+            db.referrers.updateOnly(data.new, data.id, function (err, result) {
                 assert.ok(err === null, err);
                 next(null, result);
             });
