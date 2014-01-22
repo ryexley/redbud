@@ -353,6 +353,11 @@ var RethinkDbAdapter = function (config) {
         });
     };
 
+    self.saveIpGeoData = function (data, next) {
+        console.log(data);
+        next();
+    };
+
     return self;
 };
 

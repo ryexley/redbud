@@ -1,9 +1,8 @@
 var assert = require("assert");
 var async = require("async");
+var request = require("superagent");
 
 var Parser = function (db) {
-
-    // assert.ok(db, "No database connection");
 
     // IP address geo lookup:
     //
@@ -102,8 +101,45 @@ var Parser = function (db) {
         },
 
         geo: function (ip, done) {
-            console.log("Parsing: geo:IP -> " + ip);
-            done(null, true);
+            ip = "69.245.41.222";
+            var self = this;
+            var geo = {};
+            var saveParsed = function (parsedGeo) {
+                db.saveIpGeoData(parsedGeo, function (err, results) {
+                    done(null, results);
+                });
+            };
+
+            request.get("http://ip-api.com/json/" + ip, function (err, res) {
+                if (!err) {
+                    geo = self.parseGeo(res.body, saveParsed);
+                } else {
+                    // fallback service request
+                    request.get("http://freegeoip.net/json/" + ip, function (ferr, fres) { // fallback err/res
+                        geo = self.parseGeo(fres.body, saveParsed);
+                    });
+                }
+            });
+        },
+
+        parseGeo: function (geo, done) {
+            var results = {
+                ip: geo.query || geo.ip || "",
+                city: geo.city || "",
+                zipCode: geo.zip || geo.zipcode || "",
+                region: geo.regionName || geo.region_name || "",
+                regionCode: geo.region || geo.region_code || "",
+                country: geo.country || geo.country_name || "",
+                countryCode: geo.countryCode || geo.country_code || "",
+                timezone: geo.timezone || "",
+                latitude: geo.lat || geo.latitidue || "",
+                longitude: geo.lon || geo.longitude || "",
+                areaCode: geo.areacode || "",
+                serviceProvider: geo.isp || "",
+                serviceProviderOrg: geo.org || ""
+            };
+
+            done(results);
         },
 
         onGeoDone: function (err, results) {
