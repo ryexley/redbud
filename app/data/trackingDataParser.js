@@ -1,36 +1,32 @@
+var _ = require("lodash");
 var assert = require("assert");
 var async = require("async");
 var request = require("superagent");
 
 var Parser = function (db) {
 
-    // IP address geo lookup:
-    //
-    // http://ip-api.com (try first...provides more data)
-    // -> http://ip-api.com/json/69.245.41.222
-    //
-    // http://freegeoip.net (fallback option)
-    // -> http://freegeoip.net/json/69.245.41.222
-
     var parser = {
 
         processTrackingData: function (data) {
-            async.parallel([
-                this.pageView(data.url, this.onPageViewDone),
-                this.referrer(data.referrer, this.onReferrerDone),
-                this.browserInfo(data.browserInfo, this.onBrowserInfoDone),
-                this.geo(data.clientIpAddress, this.onGeoDone)
-            ], this.onProcessTrackingDataDone);
+            // don't log anything if there isn't a siteId associated with it
+            if (data.siteId && data.siteId !== "") {
+                async.parallel([
+                    this.pageView(data.siteId, data.url, this.onPageViewDone),
+                    this.referrer(data.siteId, data.referrer, this.onReferrerDone),
+                    this.browserInfo(data.browserInfo, this.onBrowserInfoDone),
+                    this.geo(data.clientIpAddress, this.onGeoDone)
+                ], this.onProcessTrackingDataDone);
+            }
         },
 
         onProcessTrackingDataDone: function (err, results) {
             console.log("Parsing: Tracking data completed successfully");
         },
 
-        pageView: function (url, done) {
-            db.pageViewExists(url, function (err, exists) {
+        pageView: function (site, url, done) {
+            db.pageViewExists(site, url, function (err, exists) {
                 if (exists) {
-                    db.getPageView(url, function (err, pageView) {
+                    db.getPageView(site, url, function (err, pageView) {
                         db.updatePageView({
                             id: pageView.id,
                             new: {
@@ -44,6 +40,7 @@ var Parser = function (db) {
                     });
                 } else {
                     db.addPageView({
+                        siteId: site,
                         page: url,
                         hits: 1,
                         lastHit: new Date()
@@ -59,10 +56,13 @@ var Parser = function (db) {
             console.log("Parsing: pageView complete");
         },
 
-        referrer: function (url, done) {
-            db.referrerExists(url, function (err, exists) {
+        // TODO: parse referrer to see if the inbound request is coming from a
+        //       google search result, and if it is, grab the search terms from
+        //       "q" parameter of the querystring and persist as search terms
+        referrer: function (site, url, done) {
+            db.referrerExists(site, url, function (err, exists) {
                 if (exists) {
-                    db.getReferrer(url, function (err, referrer) {
+                    db.getReferrer(site, url, function (err, referrer) {
                         db.updateReferrer({
                             id: referrer.id,
                             new: {
@@ -76,6 +76,7 @@ var Parser = function (db) {
                     });
                 } else {
                     db.addReferrer({
+                        siteId: site,
                         referrer: url,
                         count: 1,
                         lastReferred: new Date()
@@ -100,6 +101,13 @@ var Parser = function (db) {
             console.log("Parsing: browserInfo complete");
         },
 
+        // IP address geo lookup:
+        //
+        // http://ip-api.com (try first...provides more data)
+        // -> http://ip-api.com/json/69.245.41.222
+        //
+        // http://freegeoip.net (fallback option)
+        // -> http://freegeoip.net/json/69.245.41.222
         geo: function (ip, done) {
             ip = "69.245.41.222";
             var self = this;

@@ -281,9 +281,9 @@ var RethinkDbAdapter = function (config) {
         });
     };
 
-    self.pageViewExists = function (url, next) {
+    self.pageViewExists = function (site, url, next) {
         db.connect({ db: dataSource }, function (err, db) {
-            db.pageviews.exists({ page: url }, function (err, exists) {
+            db.pageviews.exists({ siteId: site, page: url }, function (err, exists) {
                 assert.ok(err === null, err);
                 next(null, exists);
             });
@@ -299,9 +299,9 @@ var RethinkDbAdapter = function (config) {
         });
     };
 
-    self.getPageView = function (url, next) {
+    self.getPageView = function (site, url, next) {
         db.connect({ db: dataSource }, function (err, db) {
-            db.pageviews.first({ page: url }, function (err, pageView) {
+            db.pageviews.first({ siteId: site, page: url }, function (err, pageView) {
                 assert.ok(err === null, err);
                 next(null, pageView);
             });
@@ -317,9 +317,9 @@ var RethinkDbAdapter = function (config) {
         });
     };
 
-    self.referrerExists = function (url, next) {
+    self.referrerExists = function (site, url, next) {
         db.connect({ db: dataSource }, function (err, db) {
-            db.referrers.exists({ referrer: url }, function (err, exists) {
+            db.referrers.exists({ siteId: site, referrer: url }, function (err, exists) {
                 assert.ok(err === null, err);
                 next(null, exists);
             });
@@ -335,9 +335,9 @@ var RethinkDbAdapter = function (config) {
         });
     };
 
-    self.getReferrer = function (url, next) {
+    self.getReferrer = function (site, url, next) {
         db.connect({ db: dataSource }, function (err, db) {
-            db.referrers.first({ referrer: url }, function (err, referrer) {
+            db.referrers.first({ siteId: site, referrer: url }, function (err, referrer) {
                 assert.ok(err === null, err);
                 next(null, referrer);
             });

@@ -79,9 +79,12 @@
         };
 
         this.logVisit = function () {
-            var data = trackingData();
+            if (_redbud && _redbud.siteId) {
+                var data = trackingData();
+                data.siteId = _redbud.siteId;
 
-            sendTrackingData(JSON.stringify(data));
+                sendTrackingData(JSON.stringify(data));
+            }
         };
 
     };
