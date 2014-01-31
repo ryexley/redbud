@@ -11,7 +11,7 @@ var Parser = function (db) {
             // don't log anything if there isn't a siteId associated with it
             if (data.siteId && data.siteId !== "") {
                 async.parallel([
-                    this.pageView(data.siteId, data.url, this.onPageViewDone),
+                    this.pageView(data, this.onPageViewDone),
                     this.referrer(data.siteId, data.referrer, this.onReferrerDone),
                     this.browserInfo(data.browserInfo, this.onBrowserInfoDone),
                     this.geo(data.clientIpAddress, this.onGeoDone)
@@ -23,33 +23,33 @@ var Parser = function (db) {
             console.log("Parsing: Tracking data completed successfully");
         },
 
-        pageView: function (site, url, done) {
-            db.pageViewExists(site, url, function (err, exists) {
-                if (exists) {
-                    db.getPageView(site, url, function (err, pageView) {
-                        db.updatePageView({
-                            id: pageView.id,
-                            new: {
-                                hits: parseInt(pageView.hits, 10) + 1,
-                                lastHit: new Date()
-                            }
-                        }, function (err, result) {
-                            assert.ok(err === null, err);
-                            done(null, result);
-                        });
-                    });
-                } else {
-                    db.addPageView({
-                        siteId: site,
-                        page: url,
-                        hits: 1,
-                        lastHit: new Date()
-                    }, function (err, result) {
-                        assert.ok(err === null, err);
-                        done(null, result);
-                    });
-                }
-            });
+        pageView: function (trackingData, done) {
+            // db.pageViewExists(site, url, function (err, exists) {
+            //     if (exists) {
+            //         db.getPageView(site, url, function (err, pageView) {
+            //             db.updatePageView({
+            //                 id: pageView.id,
+            //                 new: {
+            //                     hits: parseInt(pageView.hits, 10) + 1,
+            //                     lastHit: new Date()
+            //                 }
+            //             }, function (err, result) {
+            //                 assert.ok(err === null, err);
+            //                 done(null, result);
+            //             });
+            //         });
+            //     } else {
+            //         db.addPageView({
+            //             siteId: site,
+            //             page: url,
+            //             hits: 1,
+            //             lastHit: new Date()
+            //         }, function (err, result) {
+            //             assert.ok(err === null, err);
+            //             done(null, result);
+            //         });
+            //     }
+            // });
         },
 
         onPageViewDone: function (err, results) {
@@ -60,32 +60,32 @@ var Parser = function (db) {
         //       google search result, and if it is, grab the search terms from
         //       "q" parameter of the querystring and persist as search terms
         referrer: function (site, url, done) {
-            db.referrerExists(site, url, function (err, exists) {
-                if (exists) {
-                    db.getReferrer(site, url, function (err, referrer) {
-                        db.updateReferrer({
-                            id: referrer.id,
-                            new: {
-                                count: parseInt(referrer.count, 10) + 1,
-                                lastReferred: new Date()
-                            }
-                        }, function (err, result) {
-                            assert.ok(err === null, err);
-                            done(null, result);
-                        });
-                    });
-                } else {
-                    db.addReferrer({
-                        siteId: site,
-                        referrer: url,
-                        count: 1,
-                        lastReferred: new Date()
-                    }, function (err, result) {
-                        assert.ok(err === null, err);
-                        done(null, result);
-                    });
-                }
-            });
+            // db.referrerExists(site, url, function (err, exists) {
+            //     if (exists) {
+            //         db.getReferrer(site, url, function (err, referrer) {
+            //             db.updateReferrer({
+            //                 id: referrer.id,
+            //                 new: {
+            //                     count: parseInt(referrer.count, 10) + 1,
+            //                     lastReferred: new Date()
+            //                 }
+            //             }, function (err, result) {
+            //                 assert.ok(err === null, err);
+            //                 done(null, result);
+            //             });
+            //         });
+            //     } else {
+            //         db.addReferrer({
+            //             siteId: site,
+            //             referrer: url,
+            //             count: 1,
+            //             lastReferred: new Date()
+            //         }, function (err, result) {
+            //             assert.ok(err === null, err);
+            //             done(null, result);
+            //         });
+            //     }
+            // });
         },
 
         onReferrerDone: function (err, results) {
