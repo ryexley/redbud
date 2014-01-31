@@ -16,14 +16,9 @@ gulp.task("sample-stylus", function () {
         .pipe(gulp.dest("sample/public/css"));
 });
 
-gulp.task("default", function () {
-    gulp.run("jshint", "sample-stylus");
-
-    gulp.watch(["app/**/*.js", "specs/**/*.js", "sample/**/*.js"], function () {
-        gulp.run("jshint");
-    });
-
-    gulp.watch("stylus/sample.styl", function () {
-        gulp.run("sample-stylus");
-    });
+gulp.task("watch", function () {
+    gulp.watch(["app/**/*.js", "specs/**/*.js", "sample/**/*.js"], ["jshint"]);
+    gulp.watch("stylus/sample.styl", ["sample-stylus"]);
 });
+
+gulp.task("default", ["jshint", "sample-stylus", "watch"]);
