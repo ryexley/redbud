@@ -3,6 +3,7 @@ var gutil = require("gulp-util");
 var jshint = require("gulp-jshint");
 var stylish = require("jshint-stylish");
 var stylus = require("gulp-stylus");
+var rename = require("gulp-rename");
 
 gulp.task("jshint", function () {
     gulp.src(["app/**/*.js", "specs/**/*.js", "sample/**/*.js"])
@@ -10,7 +11,15 @@ gulp.task("jshint", function () {
         .pipe(jshint.reporter(stylish));
 });
 
-gulp.task("client-stylus", function () {
+gulp.task("copy-normalize-css", function (next) {
+    gulp.src("app/public/bower-components/normalize-css/normalize.css")
+        .pipe(rename("normalize.styl"))
+        .pipe(gulp.dest("stylus"));
+
+    next();
+});
+
+gulp.task("client-stylus", ["copy-normalize-css"], function () {
     gulp.src("stylus/redbud.styl")
         .pipe(stylus({ set: ["compress"] }))
         .pipe(gulp.dest("app/public/css"));

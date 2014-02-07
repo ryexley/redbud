@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "semantic-grid": "*"
+    "semantic-grid": "*",
+    "normalize-css": "~3.0.0"
   }
 }
