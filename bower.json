@@ -1,0 +1,21 @@
+{
+  "name": "Redbud",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ryexley/redbud",
+  "authors": [
+    "Bob Yexley <bob@yexley.net>"
+  ],
+  "description": "Redbud Analytics",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "semantic-grid": "*"
+  }
+}

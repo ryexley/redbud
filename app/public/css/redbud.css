@@ -1,0 +1,4 @@
+body{width:100%;*zoom:1;}
+body:before,body:after{content:"";display:table}
+body:after{clear:both}
+body{font-family:"Ubuntu","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue","Segoe UI",Tahoma,Arial,Helvetica,Sans-Serif;margin:50px}

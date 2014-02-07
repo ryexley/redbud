@@ -10,6 +10,12 @@ gulp.task("jshint", function () {
         .pipe(jshint.reporter(stylish));
 });
 
+gulp.task("client-stylus", function () {
+    gulp.src("stylus/redbud.styl")
+        .pipe(stylus({ set: ["compress"] }))
+        .pipe(gulp.dest("app/public/css"));
+});
+
 gulp.task("sample-stylus", function () {
     gulp.src("stylus/sample.styl")
         .pipe(stylus({ set: ["compress"] }))
@@ -19,6 +25,7 @@ gulp.task("sample-stylus", function () {
 gulp.task("watch", function () {
     gulp.watch(["app/**/*.js", "specs/**/*.js", "sample/**/*.js"], ["jshint"]);
     gulp.watch("stylus/sample.styl", ["sample-stylus"]);
+    gulp.watch("stylus/redbud.styl", ["client-stylus"]);
 });
 
-gulp.task("default", ["jshint", "sample-stylus", "watch"]);
+gulp.task("default", ["jshint", "sample-stylus", "client-stylus", "watch"]);

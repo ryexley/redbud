@@ -83,6 +83,10 @@ app.all("*", function (req, res, next) {
 
 app.use(app.router);
 
+app.get("/", function (req, res, next) {
+    res.render("index", { title: "Redbud Analytics" });
+});
+
 app.post("/track", function (req, res, next) {
     var trackingData = req.body;
     var ip = req.ip;
