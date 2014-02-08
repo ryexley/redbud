@@ -17,6 +17,10 @@
   ],
   "dependencies": {
     "semantic-grid": "*",
-    "normalize-css": "~3.0.0"
+    "normalize-css": "~3.0.0",
+    "requirejs": "~2.1.10",
+    "underscore": "~1.5.2",
+    "jquery": "~2.1.0",
+    "knockout.js": "~3.0.0"
   }
 }

@@ -1,10 +1,29 @@
 @import "normalize"
+/*! (http://) semantic.gs */
 @import "../app/public/bower-components/semantic-grid/stylesheets/styl/grid.styl"
 
 // Fluid grid
 total-width = 100%
 
+// common variables and color palette
+main-background-color = #333;
+primary-font = "Ubuntu", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, Sans-Serif;
+primary-font-color = #bbb;
+
+/*! redbud client style */
+* {
+    position: relative;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: "Ubuntu", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Segoe UI", Tahoma, Arial, Helvetica, Sans-Serif;
-    margin: 50px;
+    background: main-background-color;
+    color: primary-font-color;
+    font-family: primary-font;
+    font-weight: 300;
+    margin: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 100;
 }
