@@ -7,4 +7,9 @@ html(lang="en")
         meta(name="viewport", content="width=device-width")
         link(rel="stylesheet", href="css/redbud.css")
     body
-        block content
+        header
+            div.title Analytics
+            div.app-picker
+                a(href="#", data-bind="text: selectedApp")
+        section#main-content
+            block content

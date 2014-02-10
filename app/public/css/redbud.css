@@ -45,6 +45,13 @@ body:before,body:after{content:"";display:table}
 body:after{clear:both}
 /* redbud client style */
 *{position:relative;box-sizing:border-box}
-body{background:#333;color:#ddd;font-family:"Ubuntu","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,Sans-Serif;font-weight:300}
+body{background:#333;color:#ccc;font-family:"Ubuntu","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,Sans-Serif;font-weight:300}
+a{color:#0cf}
 h1,h2,h3,h4,h5,h6{font-family:"HelveticaNeue-UltraLight","Helvetica Neue UltraLight","Ubuntu","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,Sans-Serif;font-weight:100}
+header{background:#222;padding:.5em;*zoom:1;}
+header:before,header:after{content:"";display:table}
+header:after{clear:both}
+header .title{font-family:"Ubuntu","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,Sans-Serif;display:inline;float:left;overflow:hidden;width:47.91666666666667%;margin:0 1.0416666666666665%;*width:47.91666666666667% -correction;*margin:0 1.0416666666666665% -correction}
+header .app-picker{font-size:.75em;text-align:right;display:inline;float:left;overflow:hidden;width:47.91666666666667%;margin:0 1.0416666666666665%;*width:47.91666666666667% -correction;*margin:0 1.0416666666666665% -correction}
+#main-content{margin:.5em}
 ul.modules{list-style-type:none;margin:0;padding:0}

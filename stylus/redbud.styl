@@ -6,9 +6,10 @@
 total-width = 100%
 
 // common variables, mixins and color palette
+header-background-color = #222;
 main-background-color = #333;
 primary-font = "Ubuntu", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, Sans-Serif;
-primary-font-color = #ddd;
+primary-font-color = #ccc;
 
 non-bulleted-list() {
     list-style-type: none;
@@ -28,12 +29,36 @@ body {
     font-family: primary-font;
     font-weight: 300;
 }
+a {
+    color: #0cf;
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Ubuntu", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, Sans-Serif;
     font-weight: 100;
 }
 
+header {
+    background: header-background-color;
+    padding: 0.5em;
+    clearfix();
+
+    .title {
+        font-family: primary-font;
+        column(6);
+    }
+
+    .app-picker {
+        font-size: 0.75em;
+        text-align: right;
+        column(6);
+    }
+}
+
+#main-content {
+    margin: 0.5em;
+}
+
 ul.modules {
-    non-bulleted-list()
+    non-bulleted-list();
 }
