@@ -2,4 +2,6 @@ extends client-layout
 
 block content
     h1 Redbud Analytics
+    ul.modules
+        li(data-bind="module: { name: 'counts', data: 'counts' }")
     script(src="js/require.min.js" data-main="js/main")

@@ -21,6 +21,8 @@
     "requirejs": "~2.1.10",
     "underscore": "~1.5.2",
     "jquery": "~2.1.0",
-    "knockout.js": "~3.0.0"
+    "knockout.js": "~3.0.0",
+    "knockout-amd-helpers": "~0.6.1",
+    "requirejs-text": "~2.0.10"
   }
 }

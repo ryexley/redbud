@@ -8,7 +8,7 @@ var concat =  require("gulp-concat");
 var uglify = require("gulp-uglify");
 
 gulp.task("jshint", function () {
-    gulp.src(["app/**/*.js", "specs/**/*.js", "sample/**/*.js", "!app/public/bower-components/**"])
+    gulp.src(["app/**/*.js", "specs/**/*.js", "sample/**/*.js", "!app/public/bower-components/**", "!app/public/js/require.min.js"])
         .pipe(jshint(".jshintrc"))
         .pipe(jshint.reporter(stylish));
 });
