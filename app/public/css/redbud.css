@@ -43,8 +43,8 @@ td,th{padding:0}
 body{width:100%;*zoom:1;}
 body:before,body:after{content:"";display:table}
 body:after{clear:both}
-.non-bulleted-list,ul.modules{list-style-type:none;margin:0;padding:0}
 /* redbud client style */
 *{position:relative;box-sizing:border-box}
 body{background:#333;color:#ddd;font-family:"Ubuntu","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,Sans-Serif;font-weight:300}
 h1,h2,h3,h4,h5,h6{font-family:"HelveticaNeue-UltraLight","Helvetica Neue UltraLight","Ubuntu","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,Sans-Serif;font-weight:100}
+ul.modules{list-style-type:none;margin:0;padding:0}
