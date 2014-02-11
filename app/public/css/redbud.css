@@ -55,3 +55,14 @@ header .title{font-family:"Ubuntu","HelveticaNeue-Light","Helvetica Neue Light",
 header .app-picker{font-size:.75em;text-align:right;display:inline;float:left;overflow:hidden;width:47.91666666666667%;margin:0 1.0416666666666665%;*width:47.91666666666667% -correction;*margin:0 1.0416666666666665% -correction}
 #main-content{margin:.5em}
 ul.modules{list-style-type:none;margin:0;padding:0}
+ul.counts{list-style-type:none;margin:0;padding:0;*zoom:1;}
+ul.counts:before,ul.counts:after{content:"";display:table}
+ul.counts:after{clear:both}
+ul.counts li{border-bottom:5px solid #bbb;color:#777;display:inline-block;float:left;height:50px;margin:0 5% 0 0;vertical-align:text-bottom;width:18.33%;}
+ul.counts li:last-child{margin-right:0}
+ul.counts .count{padding-bottom:1em}
+ul.counts .today{color:#fff;font-size:2em;border-bottom-color:#000;width:30%}
+ul.counts .week{border-bottom-color:#262626}
+ul.counts .month{border-bottom-color:#4d4d4d}
+ul.counts .year{border-bottom-color:#737373}
+@media only screen and (max-width: 480px){}

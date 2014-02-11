@@ -9,6 +9,7 @@ total-width = 100%
 header-background-color = #222;
 main-background-color = #333;
 primary-font = "Ubuntu", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, Sans-Serif;
+heading-font = "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Ubuntu", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, Sans-Serif;
 primary-font-color = #ccc;
 
 non-bulleted-list() {
@@ -34,7 +35,7 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Ubuntu", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, Sans-Serif;
+    font-family: heading-font;
     font-weight: 100;
 }
 
@@ -61,4 +62,9 @@ header {
 
 ul.modules {
     non-bulleted-list();
+}
+
+@import "counts";
+
+@media only screen and (max-width: 480px) {
 }

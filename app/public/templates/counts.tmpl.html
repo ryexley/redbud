@@ -1,4 +1,21 @@
-<div>
+<section>
     <h3>Counts</h3>
-    <div data-bind="text: pageviews"></div>
-</div>
+    <ul class="counts">
+        <li class="today">
+            <span class="count" data-bind="text: pageviewsToday"></span>
+            <span class="comp"></span>
+        </li>
+        <li class="week">
+            <span class="count" data-bind="text: pageviewsWeek"></span>
+            <span class="comp"></span>
+        </li>
+        <li class="month">
+            <span class="count" data-bind="text: pageviewsMonth"></span>
+            <span class="comp"></span>
+        </li>
+        <li class="year">
+            <span class="count" data-bind="text: pageviewsYear"></span>
+            <span class="comp"></span>
+        </li>
+    </ul>
+</section>

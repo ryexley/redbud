@@ -1,0 +1,44 @@
+ul.counts {
+    border-base-color = #000;
+
+    non-bulleted-list();
+    clearfix();
+
+    li {
+        border-bottom: 5px solid #bbb;
+        color: #777;
+        display: inline-block;
+        float: left;
+        height: 50px;
+        margin: 0 5% 0 0;
+        vertical-align: text-bottom;
+        width: 18.33%;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    .count {
+        padding-bottom: 1em;
+    }
+
+    .today {
+        color: #fff;
+        font-size: 2em;
+        border-bottom-color: border-base-color;
+        width: 30%;
+    }
+
+    .week {
+        border-bottom-color: lighten(border-base-color, 15%);
+    }
+
+    .month {
+        border-bottom-color: lighten(border-base-color, 30%);
+    }
+
+    .year {
+        border-bottom-color: lighten(border-base-color, 45%);
+    }
+}
