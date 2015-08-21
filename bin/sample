@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+var debug = require("debug")("redbud-sample");
+var express = require("../sample/config/express");
+
+express.set("port", process.env.PORT || "4000");
+
+var server = express.listen(express.get("port"), function () {
+  debug("Redbud SAMPLE app listening on port " + server.address().port);
+});

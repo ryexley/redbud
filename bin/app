@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var debug = require("debug")("redbud");
+var express = require("../src/server/config/express");
+var appConfig = require("../src/server/config");
+// var db = require("../data")(appConfig.database);
+
+// db.setup();
+
+express.set("port", process.env.PORT || "3000");
+
+var server = express.listen(express.get("port"), function () {
+  debug("Redbud app listening on port " + server.address().port);
+});
