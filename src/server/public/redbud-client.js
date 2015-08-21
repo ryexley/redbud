@@ -69,7 +69,7 @@
                     }
                 };
 
-                xhr.open("POST", "http://redbud.dev/track", true);
+                xhr.open("POST", "http://localhost:3000/track", true);
                 xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                 xhr.send(data);
                 console.log("Tracking data submitted successfully");

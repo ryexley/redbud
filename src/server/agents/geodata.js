@@ -35,7 +35,7 @@ var public = {
     var self = this;
     var geo = {};
     var saveParsed = function (parsedGeo) {
-        done(null, parsedGeo);
+        next(null, parsedGeo);
     };
 
     request.get("http://ip-api.com/json/" + ip, function (err, res) {
