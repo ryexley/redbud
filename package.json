@@ -28,6 +28,7 @@
     "browser-sync": "^2.8.2",
     "cssnext": "^1.8.3",
     "csswring": "^3.0.5",
+    "db-migrate": "^0.9.20",
     "del": "^1.2.1",
     "gulp": "^3.9.0",
     "gulp-concat": "~2.6.0",
@@ -39,6 +40,7 @@
     "gulp-uglify": "~1.2.0",
     "gulp-util": "~3.0.6",
     "jshint-stylish": "~2.0.1",
+    "minimist": "^1.2.0",
     "node-dev": "^2.7.1",
     "normalize.css": "^3.0.3",
     "postcss": "^5.0.0",
@@ -46,6 +48,7 @@
     "postcss-mixins": "^0.4.0",
     "postcss-nested": "^0.3.2",
     "postcss-simple-vars": "^0.3.0",
-    "require-dir": "^0.3.0"
+    "require-dir": "^0.3.0",
+    "shelljs": "^0.5.3"
   }
 }

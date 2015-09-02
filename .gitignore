@@ -1,2 +1,4 @@
 .vagrant
 node_modules/*
+src/server/config/dev.config.json
+src/db/migrations/*.database.json

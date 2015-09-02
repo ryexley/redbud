@@ -1,0 +1,7 @@
+{
+  "postgres": {
+    "user": "",
+    "host": "",
+    "database": ""
+  }
+}

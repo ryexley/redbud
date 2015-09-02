@@ -25,7 +25,7 @@ if (fs.existsSync(envConfigPath)) {
     envConfig = require(envConfigPath);
 }
 
-var configData = _merge({}, defaultConfig, envConfig);
+var configData = _extend({}, defaultConfig, envConfig);
 var config = require("configya")(configData);
 
 _extend(config, {
